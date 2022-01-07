@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/theme.dart';
 
 class CustomDialog extends StatelessWidget {
   final title;
@@ -11,13 +12,25 @@ class CustomDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
-      content: Text(content),
+      insetPadding: EdgeInsets.all(50.0),
+      title: Text(title, style: TextStyle(color: Colors.yellow)),
+      content: Text(content, style: TextStyle(color: Colors.white)),
+      backgroundColor: MainColor.secondaryColor,
       actions: [
-        ElevatedButton(
-          onPressed: callback,
-          child: Text(actionText),
-        )
+        ElevatedButton.icon(
+            icon: Icon(
+              Icons.replay,
+              color: Colors.red,
+            ),
+            onPressed: callback,
+            label: Text(actionText, style: TextStyle(color: Colors.red)),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(MainColor.secondaryColor),
+                elevation: MaterialStateProperty.all(0)
+                //padding: Material,StateProperty.all(EdgeInsets.all(50)),
+                //  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20))
+                )),
       ],
     );
   }

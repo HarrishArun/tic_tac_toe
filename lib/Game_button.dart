@@ -7,5 +7,5 @@ class GameButton {
   Color bg;
   bool enabled;
   GameButton(
-      {this.id, this.text = '', this.bg = Colors.grey, this.enabled = true});
+      {this.id, this.text = '', this.bg = Colors.indigo, this.enabled = true});
 }
