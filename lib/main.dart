@@ -4,9 +4,16 @@ import 'package:tic_tac_toe/home_page.dart';
 import 'package:tic_tac_toe/onboard/onboard_page.dart';
 import 'package:tic_tac_toe/theme.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+dynamic initScreen;
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  initScreen = await preferences.getInt('initScreen');
+  await preferences.setInt('initScreen', 1);
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(Myapp());
@@ -26,7 +33,12 @@ class Myapp extends StatelessWidget {
             themeMode: themeProvider.themeMode,
             theme: MyThemes.lightTheme,
             darkTheme: MyThemes.darkTheme,
-            home: OnBoardingPage(),
+            initialRoute:
+                initScreen == 0 || initScreen == null ? 'onboard' : 'home',
+            routes: {
+              'home': (context) => HomePage(),
+              'onboard': (context) => OnBoardingPage(),
+            },
           );
         });
   }

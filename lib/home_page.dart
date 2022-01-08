@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:tic_tac_toe/change_theme_button.dart';
 import 'package:tic_tac_toe/theme.dart';
-import 'package:tic_tac_toe/Increment.dart';
 
+import 'onboard/onboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/Game_button.dart';
 import 'package:tic_tac_toe/custom_dialog.dart';
@@ -192,7 +192,19 @@ class _HomePageState extends State<HomePage> {
               title: const Text('Tic Tac Toe'),
               backgroundColor: MainColor.secondaryColor,
               elevation: 0,
-              actions: [ChangeThemeButton()],
+              actions: [
+                ChangeThemeButton(),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (context) => OnBoardingPage(),
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    },
+                    icon: Icon(Icons.help)),
+              ],
             ),
             body: Container(
               decoration: const BoxDecoration(
