@@ -7,3 +7,21 @@ class MainColor {
   static Color secondaryColor = Color(0xFF55578c);
   static Color accentColor = Color(0xFF4169e8);
 }
+
+class MyThemes {
+  static final darkTheme = ThemeData(
+      scaffoldBackgroundColor: MainColor.primaryColor,
+      colorScheme: ColorScheme.dark());
+  static final lightTheme = ThemeData(
+      scaffoldBackgroundColor: Colors.white, colorScheme: ColorScheme.light());
+}
+
+class ThemeProvider extends ChangeNotifier {
+  ThemeMode themeMode = ThemeMode.light;
+  bool get isDarkMode => themeMode == ThemeMode.dark;
+
+  void toggleTheme(bool isOn) {
+    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+}

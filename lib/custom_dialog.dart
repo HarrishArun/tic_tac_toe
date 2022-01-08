@@ -14,8 +14,10 @@ class CustomDialog extends StatelessWidget {
     return AlertDialog(
       insetPadding: EdgeInsets.all(50.0),
       title: Text(title, style: TextStyle(color: Colors.yellow)),
-      content: Text(content, style: TextStyle(color: Colors.white)),
-      backgroundColor: MainColor.secondaryColor,
+      content: Text(
+        content,
+      ),
+      // backgroundColor: MainColor.secondaryColor,
       actions: [
         ElevatedButton.icon(
             icon: Icon(
@@ -25,8 +27,7 @@ class CustomDialog extends StatelessWidget {
             onPressed: callback,
             label: Text(actionText, style: TextStyle(color: Colors.red)),
             style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(MainColor.secondaryColor),
+                backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 elevation: MaterialStateProperty.all(0)
                 //padding: Material,StateProperty.all(EdgeInsets.all(50)),
                 //  textStyle: MaterialStateProperty.all(TextStyle(fontSize: 20))

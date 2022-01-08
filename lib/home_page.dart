@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:tic_tac_toe/change_theme_button.dart';
 import 'package:tic_tac_toe/theme.dart';
+import 'package:tic_tac_toe/Increment.dart';
 
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/Game_button.dart';
@@ -15,6 +17,13 @@ class _HomePageState extends State<HomePage> {
   var player1;
   var player2;
   var activePlayer;
+
+  int _counter = 0;
+  void _winCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   void initState() {
@@ -155,6 +164,7 @@ class _HomePageState extends State<HomePage> {
             context: context,
             builder: (_) => new CustomDialog("Hurray!You Won",
                 "Press the reset button to start again.", resetGame));
+        _winCounter();
       } else {
         showDialog(
             context: context,
@@ -176,84 +186,104 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          backgroundColor: MainColor.primaryColor,
-          appBar: AppBar(
-            title: const Text('Tic Tac Toe'),
-            backgroundColor: MainColor.secondaryColor,
-            elevation: 0,
-          ),
-          body: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        'https://firebasestorage.googleapis.com/v0/b/dealmartadminapp.appspot.com/o/TicTacToe%2FUntitled%20design%20(9).png?alt=media&token=3b08826f-91a3-4349-9e2c-6b7d2d7c3adc'),
-                    fit: BoxFit.cover)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.network(
-                  'https://firebasestorage.googleapis.com/v0/b/dealmartadminapp.appspot.com/o/TicTacToe%2F1641568423057.png?alt=media&token=f9dcdfb1-22d8-44d7-a001-5d727e1126da',
-                  height: 200.0,
-                  scale: 1,
-                ),
-                Expanded(
-                  child: Container(
-                    child: GridView.builder(
-                      padding: const EdgeInsets.all(45.0),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 1.0,
-                              crossAxisSpacing: 9,
-                              mainAxisSpacing: 9),
-                      itemCount: buttonsList.length,
-                      itemBuilder: (context, i) => SizedBox(
-                        width: 100.0,
-                        height: 100.0,
-                        child: RaisedButton(
-                          onPressed: buttonsList[i].enabled
-                              ? () => playGame(buttonsList[i])
-                              : null,
-                          child: Text(
-                            buttonsList[i].text,
-                            style: TextStyle(
-                                color: buttonsList[i].bg, fontSize: 64.0),
+      child: Flexible(
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Tic Tac Toe'),
+              backgroundColor: MainColor.secondaryColor,
+              elevation: 0,
+              actions: [ChangeThemeButton()],
+            ),
+            body: Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(
+                          'https://firebasestorage.googleapis.com/v0/b/dealmartadminapp.appspot.com/o/TicTacToe%2FUntitled%20design%20(9).png?alt=media&token=3b08826f-91a3-4349-9e2c-6b7d2d7c3adc'),
+                      fit: BoxFit.cover)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Image.network(
+                    'https://firebasestorage.googleapis.com/v0/b/dealmartadminapp.appspot.com/o/TicTacToe%2F1641568423057.png?alt=media&token=f9dcdfb1-22d8-44d7-a001-5d727e1126da',
+                    height: 200.0,
+                    scale: 1,
+                  ),
+                  Container(
+                    // padding: EdgeInsets.fromLTRB(40, 10, 100, 40),
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.network(
+                            'https://firebasestorage.googleapis.com/v0/b/dealmartadminapp.appspot.com/o/Rose%20Minimalist%20hand-drawn%20circle%20floral%20Logo%20template.png?alt=media&token=98772d78-9c24-43db-90ee-14a7ba23aa72'),
+                        Text(
+                          '$_counter',
+                          style: Theme.of(context).textTheme.headline4,
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: GridView.builder(
+                        padding: const EdgeInsets.all(45.0),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 1.0,
+                                crossAxisSpacing: 9,
+                                mainAxisSpacing: 9),
+                        itemCount: buttonsList.length,
+                        itemBuilder: (context, i) => SizedBox(
+                          width: 100.0,
+                          height: 100.0,
+                          child: RaisedButton(
+                            onPressed: buttonsList[i].enabled
+                                ? () => playGame(buttonsList[i])
+                                : null,
+                            child: Text(
+                              buttonsList[i].text,
+                              style: TextStyle(
+                                  color: buttonsList[i].bg, fontSize: 64.0),
+                            ),
+                            color: MainColor.secondaryColor,
+                            disabledColor: MainColor.secondaryColor,
                           ),
-                          color: MainColor.secondaryColor,
-                          disabledColor: MainColor.secondaryColor,
                         ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  height: 50.0,
-                  // alignment: Alignment.topCenter,
-                  color: MainColor.primaryColor,
-                  child: ElevatedButton.icon(
-                      icon: Icon(
-                        Icons.replay,
-                        color: Colors.red,
-                      ),
-                      onPressed: resetGame,
-                      label: Text(
-                        'Reset',
-                        style: TextStyle(color: Colors.red, fontSize: 15),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(MainColor.secondaryColor),
-                        elevation: MaterialStateProperty.all(0),
-                        // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
-                        // textStyle: MaterialStateProperty.all(
-                        //TextStyle(fontSize: 20))
-                      )),
-                ),
-              ],
-            ),
-          )),
+                  Container(
+                    height: 50.0,
+                    // alignment: Alignment.topCenter,
+                    color: MainColor.primaryColor,
+                    child: ElevatedButton.icon(
+                        icon: Icon(
+                          Icons.replay,
+
+                          ///color: Colors.white,
+                        ),
+                        onPressed: resetGame,
+                        label: Text(
+                          'Reset',
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              MainColor.secondaryColor),
+                          elevation: MaterialStateProperty.all(0),
+                          // padding: MaterialStateProperty.all(EdgeInsets.all(50)),
+                          // textStyle: MaterialStateProperty.all(
+                          //TextStyle(fontSize: 20))
+                        )),
+                  ),
+                ],
+              ),
+            )),
+      ),
     );
   }
 }
